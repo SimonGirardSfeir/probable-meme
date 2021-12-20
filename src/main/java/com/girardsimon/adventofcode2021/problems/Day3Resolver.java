@@ -1,28 +1,25 @@
 package com.girardsimon.adventofcode2021.problems;
 
-import com.girardsimon.adventofcode2021.model.ObjectDay3;
-import com.girardsimon.adventofcode2021.utils.UtilsClass;
-import lombok.experimental.UtilityClass;
+import com.girardsimon.adventofcode2021.model.day3.BitPositionData;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@UtilityClass
-public class Day3Resolver {
+public class Day3Resolver implements Resolver {
 
     int[] number1PerBit = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     int[] number0PerBit = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    public int part1(String fileName) throws IOException {
+    @Override
+    public int part1(List<String> lines) {
 
-        UtilsClass.getLines(fileName)
-                .forEach(Day3Resolver::incrementBitCounter);
+        int binaryLength = lines.get(0).length();
+        lines.forEach(this::incrementBitCounter);
 
         StringBuilder gammaRateSb = new StringBuilder();
         StringBuilder epsilonRateSb = new StringBuilder();
 
-        for(int i = 0; i < 12; i++) {
+        for(int i = 0; i < binaryLength; i++) {
             if(number0PerBit[i] < number1PerBit[i]) {
                 gammaRateSb.append("1");
                 epsilonRateSb.append("0");
@@ -38,8 +35,9 @@ public class Day3Resolver {
         return gammaRate * epsilonRate;
     }
 
-    public int part2(String fileName) throws IOException {
-        var oxygenList = UtilsClass.getLines(fileName);
+    @Override
+    public int part2(List<String> lines) {
+        var oxygenList = lines;
         int i = 0;
 
         while(oxygenList.size() > 1) {
@@ -51,7 +49,7 @@ public class Day3Resolver {
             i++;
         }
 
-        var c02List = UtilsClass.getLines(fileName);
+        var c02List = lines;
         int j = 0;
 
         while(c02List.size() > 1) {
@@ -80,17 +78,17 @@ public class Day3Resolver {
     }
 
     private char getMostCommonBitPerPosition(List<String> list, int bitPosition) {
-        ObjectDay3 objectDay3 = new ObjectDay3(0, 0);
+        BitPositionData bitPositionData = new BitPositionData(0, 0);
 
         list.forEach(value -> {
             if (value.charAt(bitPosition) == '1') {
-                objectDay3.incrementOne();
+                bitPositionData.incrementOne();
             } else {
-                objectDay3.incrementZeros();
+                bitPositionData.incrementZeros();
             }
         });
 
-        if(objectDay3.getNumberOfOnes() >= objectDay3.getNumberOfZeros()) {
+        if(bitPositionData.getNumberOfOnes() >= bitPositionData.getNumberOfZeros()) {
             return '1';
         } else {
             return '0';

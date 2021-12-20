@@ -1,11 +1,11 @@
-package com.girardsimon.adventofcode2021.model;
+package com.girardsimon.adventofcode2021.model.day3;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @AllArgsConstructor
-public class ObjectDay3 {
+public class BitPositionData {
 
     int numberOfZeros;
     int numberOfOnes;
