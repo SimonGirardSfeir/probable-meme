@@ -113,7 +113,7 @@ class Day3ResolverTest {
 
 
     @Test
-    void part2_should_compute_life_support_rating()  {
+    void part2_solution()  {
         //Given
         int actualLifeSupportRating = resolver.getCo2ScrubberRating(linesFromAOC) * resolver.getOxygenGeneratorRating(linesFromAOC);
 
