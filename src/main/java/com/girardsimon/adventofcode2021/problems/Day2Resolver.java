@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class Day2Resolver {
 
-    List<String> instructions;
+    private final List<String> instructions;
 
     public List<Instruction> mapLinesToInstructions() {
         return instructions.stream()

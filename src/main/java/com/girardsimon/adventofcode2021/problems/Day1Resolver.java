@@ -7,7 +7,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Day1Resolver {
 
-    public final List<String> depths;
+    private final List<String> depths;
 
     public int[] mapLinesToIntArray() {
         return depths.stream()
