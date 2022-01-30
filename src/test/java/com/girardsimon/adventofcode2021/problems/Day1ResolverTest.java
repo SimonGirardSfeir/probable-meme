@@ -17,17 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Day1ResolverTest {
 
-    List<String> linesFromFile;
+    List<String> linesFromAOC;
+    Day1Resolver aOCresolver;
+    List<String> lines;
     Day1Resolver resolver;
-    List<String> simpleDataSampleForDepths;
-    Day1Resolver resolverWithBasicData;
 
     @BeforeEach
     void setUp() throws IOException {
-        linesFromFile = UtilsClass.getLines("src/test/resources/day1/data.txt");
-        resolver = new Day1Resolver(linesFromFile);
-        simpleDataSampleForDepths = Arrays.asList("199", "200", "208", "210", "200", "207", "240", "269", "260", "263");
-        resolverWithBasicData = new Day1Resolver(simpleDataSampleForDepths);
+        linesFromAOC = UtilsClass.getLines("src/test/resources/day1/data.txt");
+        aOCresolver = new Day1Resolver(linesFromAOC);
+        lines = Arrays.asList("199", "200", "208", "210", "200", "207", "240", "269", "260", "263");
+        resolver = new Day1Resolver(lines);
     }
 
     @Test
@@ -37,11 +37,11 @@ class Day1ResolverTest {
         var givenDay1Resolver = new Day1Resolver(givenList);
 
         //When
-        var actualList = givenDay1Resolver.mapLinesToIntArray();
+        var actualArray = givenDay1Resolver.mapLinesToIntArray();
 
         //Then
         var expectedList = new int[] {123, 456, 789};
-        assertThat(actualList).containsExactly(expectedList);
+        assertThat(actualArray).containsExactly(expectedList);
     }
 
     @Test
@@ -61,7 +61,7 @@ class Day1ResolverTest {
         int windowMeasurementSize = 3;
 
         //When
-        int actualSumForWindow = resolverWithBasicData.getSumForWindow(currentIndex, windowMeasurementSize);
+        int actualSumForWindow = resolver.getSumForWindow(currentIndex, windowMeasurementSize);
 
         //Then
         int expectedSumForWindow = 607;
@@ -79,7 +79,7 @@ class Day1ResolverTest {
     @ParameterizedTest
     void countNumberOfDepthIncreasing_should_compute_number_of_depth_increasing_according_to_given_sliding_window(int windowMeasurementSize, int expectedNumberOfDepthIncresing) {
         //When
-        int actualNumberOfDepthIncreasing = resolverWithBasicData.countNumberOfDepthIncreasing(windowMeasurementSize);
+        int actualNumberOfDepthIncreasing = resolver.countNumberOfDepthIncreasing(windowMeasurementSize);
 
         assertThat(actualNumberOfDepthIncreasing).isEqualTo(expectedNumberOfDepthIncresing);
     }
@@ -89,9 +89,9 @@ class Day1ResolverTest {
      * I keep these unit tests only to conserve my aoc result!
      */
     @Test
-    void part1_should_calculate_number_of_times_depth_measurement_increases() {
+    void part1_result() {
         //When
-        int actualNumberOfTimes = resolver.countNumberOfDepthIncreasing(1);
+        int actualNumberOfTimes = aOCresolver.countNumberOfDepthIncreasing(1);
 
         //Then
         int expectedNumberOfTimes = 1288;
@@ -99,9 +99,9 @@ class Day1ResolverTest {
     }
 
     @Test
-    void part2_should_calculate_number_of_times_sums_of_three_consecutives_depth_measurement_increases() {
+    void part2_result() {
         //When
-        int actualNumberOfTimes = resolver.countNumberOfDepthIncreasing(3);
+        int actualNumberOfTimes = aOCresolver.countNumberOfDepthIncreasing(3);
 
         //Then
         int expectedNumberOfTimes = 1311;

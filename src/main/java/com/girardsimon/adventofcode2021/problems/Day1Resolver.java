@@ -1,14 +1,13 @@
 package com.girardsimon.adventofcode2021.problems;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
 
+@AllArgsConstructor
 public class Day1Resolver {
 
-    List<String> depths;
-
-    public Day1Resolver(List<String> depths) {
-        this.depths = depths;
-    }
+    public final List<String> depths;
 
     public int[] mapLinesToIntArray() {
         return depths.stream()

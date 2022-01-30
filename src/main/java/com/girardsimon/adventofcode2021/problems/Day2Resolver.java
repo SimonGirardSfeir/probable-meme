@@ -2,57 +2,71 @@ package com.girardsimon.adventofcode2021.problems;
 
 import com.girardsimon.adventofcode2021.model.day2.Direction;
 import com.girardsimon.adventofcode2021.model.day2.Instruction;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day2Resolver implements Resolver{
+@AllArgsConstructor
+public class Day2Resolver {
 
-    @Override
-    public int part1(List<String> lines) {
-        int[] finalPosition = new int[]{0, 0};
+    List<String> instructions;
 
-        var instructionsList = getInstructionFromLines(lines);
-
-        for (Instruction instruction : instructionsList) {
-            if (instruction.getDirection().equals(Direction.up)) {
-                finalPosition[1] = finalPosition[1] - instruction.getValue();
-            } else if (instruction.getDirection().equals(Direction.down)) {
-                finalPosition[1] = finalPosition[1] + instruction.getValue();
-            } else {
-                finalPosition[0] = finalPosition[0] + instruction.getValue();
-            }
-        }
-
-        return finalPosition[0]*finalPosition[1];
-    }
-
-    @Override
-    public int part2(List<String> lines) {
-        int[] finalPosition = new int[]{0, 0, 0};
-
-        var instructionsList = getInstructionFromLines(lines);
-
-        for (Instruction instruction : instructionsList) {
-            if (instruction.getDirection().equals(Direction.up)) {
-                finalPosition[2] = finalPosition[2] - instruction.getValue();
-            } else if (instruction.getDirection().equals(Direction.down)) {
-                finalPosition[2] = finalPosition[2] + instruction.getValue();
-            } else {
-                finalPosition[0] = finalPosition[0] + instruction.getValue();
-                finalPosition[1] = finalPosition[1] + finalPosition[2]*instruction.getValue();
-            }
-        }
-
-        return finalPosition[0]*finalPosition[1];
-    }
-
-    private List<Instruction> getInstructionFromLines(List<String> lines) {
-        return lines.stream()
+    public List<Instruction> mapLinesToInstructions() {
+        return instructions.stream()
                 .map(value -> Instruction.builder()
                         .value(Integer.parseInt(value.split(" ")[1]))
                         .direction(Direction.valueOf(value.split(" ")[0]))
                         .build()
                 ).collect(Collectors.toList());
+    }
+
+    public int computeFinalPositionProduct() {
+        int horizontalPosition = 0;
+        int depth = 0;
+
+        var instructionsList = mapLinesToInstructions();
+
+        for (Instruction instruction : instructionsList) {
+            switch (instruction.getDirection()) {
+                case up:
+                    depth = depth - instruction.getValue();
+                    break;
+                case down:
+                    depth = depth + instruction.getValue();
+                    break;
+                case forward:
+                    horizontalPosition = horizontalPosition + instruction.getValue();
+                    break;
+            }
+        }
+
+        return depth*horizontalPosition;
+    }
+
+    public int computeFinalPositionProductWithAim() {
+        int horizontalPosition = 0;
+        int depth = 0;
+        int aim = 0;
+
+        var instructionsList = mapLinesToInstructions();
+
+        for (Instruction instruction : instructionsList) {
+            switch (instruction.getDirection()) {
+                case up:
+                    aim = aim - instruction.getValue();
+                    break;
+                case down:
+                    aim = aim + instruction.getValue();
+                    break;
+                case forward:
+                    horizontalPosition = horizontalPosition + instruction.getValue();
+                    depth = depth + aim*instruction.getValue();
+                    break;
+            }
+
+        }
+
+        return depth*horizontalPosition;
     }
 }
